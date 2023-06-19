@@ -68,7 +68,7 @@ three circles into one, we could just merge
 the first two and the result of that with the
 last one for example.
 
-### Frobenius Algebras
+### Relation to Frobenius Algebras
 
 Let us summarize what we have so far:
 
@@ -78,11 +78,11 @@ tensor products of the Hilbert space $A \otimes \cdots \otimes A$.
 - To a cobordism, a transformation of space through time corresponds
 a map between the corresponding Hilbert spaces.
 - There are essentially 5 types of cobordisms:
-  - Merging two circles: $\mu \colon A \otimes A \to A $
-  - Splitting a circle: $\delta \colon A \to A \otimes A $
-  - Creating a circle: $\eta\colon \mathbb{C} \to A $
+  - Merging two circles: $\mu \colon A \otimes A \to A$
+  - Splitting a circle: $\delta \colon A \to A \otimes A$
+  - Creating a circle: $\eta \colon \mathbb{C} \to A$
   - Removing a circle: $\epsilon \colon A \to \mathbb{C}$
-  - Swapping two circles: $\tau\colon A \otimes A \to A \otimes A $
+  - Swapping two circles: $\tau\colon A \otimes A \to A \otimes A$.
 
 This information completely describes our TQFT. There
 is another way to think about this though. Essentially
@@ -94,19 +94,188 @@ a commutative Frobenius algebra. Explicitly:
 - $A$ is a $\mathbb{C}$-vector space.
 - $\mu$ is associative and commutative, and $\eta(1)$ is a unit.
 - $\delta$ is co-associative and co-commutative, and $\epsilon$ is a co-unit.
-- $\mu$ and $\delta$ satisfy
-$$ \delta \circ \mu =
-(\delta \otimes id) \circ (id \otimes \mu) =
-(id \otimes \delta) \circ (\mu \otimes id)
+- $\mu$ and $\delta$ satisfy:
 $$
+\delta \circ \mu =
+(\delta \otimes id) \circ (id \otimes \mu) =
+(id \otimes \delta) \circ (\mu \otimes id)$$
 
 By drawing the relevant cobordisms, one can check that these are
 indeed satisfied. From this, we have completely classified
-(1+1)-dimensional TQFTs.
+(1+1)-dimensional TQFT's.
 
 ## Script
 
 The spoken text of the video.
+
+### Introduction
+
+There are two main actors in this video. On the one
+hand we have topological quantum field theories motivated
+by physics. On the other hand we have the world of
+abstract algebra, and in particular Frobenius algebras.
+What we will see, is that these are related to each other.
+When I first learned about this, I was baffled. These
+things seem to be completely unrelated at first sight, and yet in some
+sense they are just the same thing. For me, this is a very
+good example of the beauty of mathematics. Two seemingly
+different areas of mathematics connected through abstract
+thinking.
+
+### Physical Motivation
+
+At the beginning of the 20th century, two big revolutions happened
+in physics.
+
+General relativity gave a completely new description
+of gravity. The natural language for gravity turned out
+to be the mathematics
+of manifolds and curvature.
+
+On the other hand, quantum mechanics
+gave a new way of looking at fundamental particles.
+Particles are in a superposition of different states,
+and we can only determine the exact state through measurement.
+These states are modelled mathematically in the language of
+complex numbers and Hilbert spaces.
+
+Frustratingly, the two theories clash. General relativity
+still adopts a classical view of other forces than gravity, while
+quantum mechanics assumes flat space-time. The theory
+breaks down near massive objects like black holes.
+Physicists hope to unify these two theories in a
+description of gravity according to the principles
+of quantum mechanics: Quantum Gravity.
+
+In the search for quantum gravity, physicists
+come up with toy models, simplified models of reality
+from which they hope to gain valuable insights. One
+such class of toy models are the so-called Topological
+Quantum Field Theories, or TQFT's for short.
+
+### TQFT's
+
+We will view space as some compact manifold without boundary.
+In principle, this should be 3-dimensional to model
+the world we know. This makes the theory a lot
+more difficult, so we will instead consider
+1-dimensional manifolds, as these are much simpler
+to work with. Indeed, one can always smoothly
+transform a 1-dimensional manifold
+to a circle, or multiple copies of a circle.
+
+This gives us a description of space. Now
+we need to incorporate quantum theory.
+For this we need a Hilbert space, which
+is the mathematical object used to describe
+the possible states of a quantum system.
+If we have multiple circles, then the
+resulting Hilbert space should contain all
+the possible ways to combine the states
+from the different circles. The mathematical
+way to do this is through the tensor product.
+
+### Cobordisms
+
+So far, this really doesn't look that interesting.
+However, we still have one final ingredient to consider: time.
+Throughout time, the shape of space might change.
+Looking at the shape traced out by such a transformation,
+we get a 2-dimensional manifold, whose boundaries correspond to
+space before and after the transformation. We call such
+shapes *cobordisms*. We only care about the topological
+shape of these cobordisms. That means that we can
+stretch or squish the shape, as if it were rubber. This
+is where the **Topological** in Topological Quantum Field
+Theory comes from. So, for example, these two cobordisms,
+which look different at first sight, are really the same.
+Mathematicians have come up with a brilliant name
+for this shape. They call it a pair of pants.
+
+Now, because the shape of space can change throughout time,
+so can the associated Hilbert spaces. Hence, we need to associate
+to each cobordism a transformation of Hilbert spaces. Crucially,
+this association should be compatible with the way we can
+combine cobordisms. Let me explain what I mean with an example.
+
+These two cobordisms are the same. Indeed, it is common
+knowledge that gluing a pair of pants to the pant leg of
+another pair of pants yields pants with 3 legs.
+Let us call the maps associated to the
+merging of two or three circles m_2 and m_3 respectively.
+Then we get the following equation. The map "id" is the
+identity map, a mathematical way of saying it leaves
+its input unchanged.
+
+What we just saw is that we can make the map m_3
+out of m_2. This leads to the important observation,
+that we really only need to consider these four cobordisms.
+Any other cobordism can be build out of just these four.
+For example, this one can be decomposed as follows.
+
+Since these are the building blocks of all cobordisms,
+we should study their associated maps more closely.
+We have the following cobordism, which starts out
+from nothing and creates a circle. To what Hilbert
+space should nothing correspond? Let us call
+it k.
+We know that two circles corresponds to the tensor
+product of the Hilbert space with itself. On the other
+hand if we have a single circle, we can also view it
+as a circle together with nothing. So, the tensor
+product of H with k should just be H itself.
+Intuitively, this is because k represents a system with
+only one possible state.
+So, since it is already predetermined, it doesn't offer
+any new states when combining it with H.
+The Hilbert space with one state is C, the complex
+numbers.
+
+### Frobenius Algebras
+
+This means we have four maps: which we call the
+multiplication, comultiplication, unit, and counit
+respectively. Why does it make sense to call
+it multiplication, and what does comultiplication
+even mean? Let us start with the thing that sounds
+familiar to us, multiplication. We all know that
+2 times 3 is 6, but what does that have to
+do with this? As a first step, we will write
+xy for the result of multiplying x and y
+via mu. What we now need to show, is that
+this behaves as we are used to. For example,
+we know that 2 times 3, times 4 is the same
+as 2 times, 3 times 4. So is x times y, times z the same
+as x times, y times z? For this, we just need to look
+at the relevant cobordisms. First multiplying x and y,
+and then multiplying the result with z, corresponds to
+the cobordism on the left. Multiplying y and z first,
+and then multiplying x by the result of this corresponds
+to the cobordism on the right. Since the two cobordisms
+are the same, the resulting output must be the same as well!
+
+In the same vein, we can show that x times y is equal to
+y times x. Indeed, the two cobordisms are the same.
+Finally, you may remember that 1 times anything is that
+thing itself. But what is 1 in this context? This is where
+the unit comes in. Let us write 1_H for the image of the
+complex number 1 under eta. Then we have that x times
+1_H is indeed just x. So the name, unit, is justified.
+
+The other two maps, the comultiplication
+and counit, satisfy the same identities, except that all the maps go the other way around.
+This is what the "co" prefix indicates.
+
+There is one final identity to consider. This is
+what happens when we combine multiplication with
+comultiplication. We have three equivalent
+cobordisms. These are known as the so-called
+Frobenius conditions.
+What we have just shown is that H is what
+mathematicians call a commutative Frobenius algebra.
+In other words, the study of 2-dimensional TQFT's
+is the same as the study of commutative Frobenius
+algebras.
 
 ## Scenes
 
