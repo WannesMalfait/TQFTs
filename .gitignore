@@ -13,3 +13,8 @@ dist
 *.njsproj
 *.sln
 *.sw?
+
+# Audacity stuff
+*.au
+*.aup
+script_data/
