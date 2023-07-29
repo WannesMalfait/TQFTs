@@ -18,3 +18,6 @@ dist
 *.au
 *.aup
 script_data/
+
+# Blender backup file
+*.blend1
