@@ -1,7 +1,7 @@
-import {makeProject} from '@motion-canvas/core';
+import { makeProject } from '@motion-canvas/core';
 
-import example from './scenes/example?scene';
+import two_theories from './scenes/two_theories?scene';
 
 export default makeProject({
-  scenes: [example],
+  scenes: [two_theories],
 });
