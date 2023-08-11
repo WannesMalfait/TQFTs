@@ -2,7 +2,7 @@ import { Latex, Layout, NodeProps, Ray, Rect, Shape, ShapeProps, colorSignal, in
 import { ColorSignal, PossibleColor, PossibleVector2, SignalValue, SimpleSignal, Vector2, all, easeInOutCubic, makeRef, tween, unwrap } from "@motion-canvas/core";
 
 export interface ComDiagProps extends ShapeProps {
-    diagScale?: SignalValue<number>;
+    labelHeight?: SignalValue<number>;
     gapSize?: SignalValue<number>;
     itemColor?: SignalValue<PossibleColor>;
     labelColor?: SignalValue<PossibleColor>;
@@ -13,16 +13,16 @@ export interface ComDiagProps extends ShapeProps {
 }
 
 export class ComDiag extends Shape {
-    @initial('lightgrey')
+    @initial('#CCCCCC')
     @colorSignal()
     public declare readonly itemColor: ColorSignal<this>;
     @initial('white')
     @colorSignal()
     public declare readonly labelColor: ColorSignal<this>;
-    @initial(1)
+    @initial(15)
     @signal()
-    public declare readonly diagScale: SimpleSignal<number, this>;
-    @initial(80)
+    public declare readonly labelHeight: SimpleSignal<number, this>;
+    @initial(120)
     @signal()
     public declare readonly gapSize: SimpleSignal<number, this>;
     @initial([['item']])
@@ -50,7 +50,7 @@ export class ComDiag extends Shape {
         });
 
         let diagram =
-            <Rect direction={'column'} scale={this.diagScale} gap={this.gapSize} alignItems={'center'} layout>
+            <Rect direction={'column'} gap={this.gapSize} alignItems={'center'} layout>
             </Rect>;
         this.items().forEach((row, row_i) => {
             const row_layout = <Layout direction={'row'} gap={this.gapSize} />;
@@ -78,10 +78,9 @@ export class ComDiag extends Shape {
                     stroke={this.itemColor}
                     start={0.1}
                     end={0.1}
-                    lineWidth={3}
+                    lineWidth={2}
                     endArrow={true}
-                    opacity={0.8}
-                    arrowSize={15}
+                    arrowSize={10}
                 />
             })
         )
@@ -110,14 +109,14 @@ export class ComDiag extends Shape {
             this.add(<Latex
                 ref={makeRef(this.labelRefs, i)}
                 tex={'{\\color{' + this.labelColor() + '} ' + this.labels()[i] + '}'}
-                height={25}
+                height={this.labelHeight}
                 opacity={0}
             />)
             this.labelRefs[i].absolutePosition(() => {
                 const midpoint = arrow_ref.getPointAtPercentage(0.5);
                 // Push arrows labels away from the center of the diagram.
-                const sign = (midpoint.normal.dot(midpoint.position) > 0) ? 1 : -1;
-                return (midpoint.position.add(midpoint.normal.scale(sign * 35)))
+                const sign = (midpoint.normal.dot(midpoint.position) >= 0.01) ? 1 : -1;
+                return (midpoint.position.add(midpoint.normal.scale(sign * 25)))
                     .transformAsPoint(arrow_ref.parent().localToWorld())
             }
             );
