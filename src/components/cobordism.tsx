@@ -3,6 +3,7 @@ import { SignalValue, SimpleSignal, all, createSignal, easeInOutCubic, makeRef, 
 
 export interface CobordismProps extends ShapeProps {
     circleSize?: SignalValue<number>;
+    hideBottomCircles?: SignalValue<boolean>;
     lengthScale?: SignalValue<number>;
     connectorScale?: SignalValue<number>;
     numBottomCircles?: SignalValue<number>;
@@ -15,6 +16,9 @@ export class Cobordism extends Shape {
     @initial(200)
     @signal()
     public declare readonly circleSize: SimpleSignal<number, this>;
+    @initial(false)
+    @signal()
+    public declare readonly hideBottomCircles: SimpleSignal<boolean, this>;
     @initial(1)
     @signal()
     public declare readonly lengthScale: SimpleSignal<number, this>;
@@ -94,12 +98,13 @@ export class Cobordism extends Shape {
                             width={this.circleSize}
                             height={() => this.circleSize() * 0.5}
                             lineCap={'round'}
-                            opacity={() => (this.bottomAngle() <= 0.01) ? 0 : 1}
+                            opacity={() => (this.bottomAngle() <= 0.01 || this.hideBottomCircles()) ? 0 : 1}
                             endAngle={this.bottomAngle}
                         />
                     );
                 }),
         );
+
 
         // Bottom circle connectors.
         this.add(
