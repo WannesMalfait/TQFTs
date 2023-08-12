@@ -3,6 +3,7 @@ import { SignalValue, SimpleSignal, all, createSignal, easeInOutCubic, makeRef, 
 
 export interface CobordismProps extends ShapeProps {
     circleSize?: SignalValue<number>;
+    lengthScale?: SignalValue<number>;
     numBottomCircles?: SignalValue<number>;
     numTopCircles?: SignalValue<number>;
     needsAnimation?: SignalValue<boolean>;
@@ -13,6 +14,9 @@ export class Cobordism extends Shape {
     @initial(200)
     @signal()
     public declare readonly circleSize: SimpleSignal<number, this>;
+    @initial(1)
+    @signal()
+    public declare readonly lengthScale: SimpleSignal<number, this>;
     @initial(1)
     @signal()
     public declare readonly numBottomCircles: SimpleSignal<number, this>;
@@ -28,6 +32,7 @@ export class Cobordism extends Shape {
     private lines: CubicBezier[] = [];
     private progress = createSignal(0);
     private bottomAngle = createSignal(0);
+    private bottomConnectorAngle = createSignal(360);
 
     public constructor(props?: CobordismProps) {
         super({
@@ -37,6 +42,7 @@ export class Cobordism extends Shape {
         if (!this.needsAnimation()) {
             this.progress(1);
             this.bottomAngle(360);
+            this.bottomConnectorAngle(180);
         }
 
         // Connecting lines.
@@ -49,10 +55,10 @@ export class Cobordism extends Shape {
                         ref={makeRef(this.lines, i)}
                         lineWidth={this.lineWidth}
                         stroke={this.stroke}
-                        p0={[-start_width / 2 + i * start_width, this.circleSize()]}
+                        p0={[-start_width / 2 + i * start_width, this.circleSize() * this.lengthScale()]}
                         p1={[-start_width / 2 + i * start_width, 0]}
                         p2={[-end_width / 2 + i * end_width, 0]}
-                        p3={[-end_width / 2 + i * end_width, -this.circleSize()]}
+                        p3={[-end_width / 2 + i * end_width, -this.circleSize() * this.lengthScale()]}
                         lineCap={'round'}
                         end={this.progress}
                         opacity={() => Math.pow(this.progress(), 0.2)}
@@ -101,8 +107,9 @@ export class Cobordism extends Shape {
                             width={() => this.bottomCircles[i + 1].left().x - this.bottomCircles[i].right().x}
                             height={() => this.circleSize() * 0.25}
                             lineCap={'round'}
-                            endAngle={() => Math.max(0, this.bottomAngle() - 180)}
-                            opacity={() => (this.bottomAngle() <= 180) ? 0 : 1}
+                            startAngle={this.bottomConnectorAngle}
+                            endAngle={360}
+                            opacity={() => (this.bottomConnectorAngle() >= 359.99) ? 0 : 1}
                         />
                     );
                 }),
@@ -176,14 +183,30 @@ export class Cobordism extends Shape {
 
     }
     public *animate(start: number = 1, end: number = 1.5) {
+        this.progress(0);
+        this.bottomAngle(0);
+        this.bottomConnectorAngle(360);
         yield*
             tween(start, value => {
                 this.bottomAngle(easeInOutCubic(value, 0, 360));
+                // Delay this till halfway.
+                const delayed_value = Math.max(0, value - 0.5) * 2;
+                this.bottomConnectorAngle(easeInOutCubic(delayed_value, 360, 180));
             });
-        yield* tween(end, value => {
-            this.progress(easeInOutCubic(value));
-        });
+        yield* this.progress(1, end);
+    }
 
+    public *bottom_circles(duration: number = 1) {
+        this.bottomAngle(0);
+        yield* this.bottomAngle(360, duration);
+    }
+    public *bottom_connectors(duration: number = 0.5) {
+        this.bottomConnectorAngle(360);
+        yield* this.bottomConnectorAngle(180, duration);
+    }
+    public *extrude(duration: number = 1.5) {
+        this.progress(0);
+        yield* this.progress(1, duration);
     }
 }
 
