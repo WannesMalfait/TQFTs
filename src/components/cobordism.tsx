@@ -115,6 +115,10 @@ export class Cobordism extends Shape {
                     const l1_pos = () => this.lines[0].getPointAtPercentage(this.progress()).position;
                     const l2_pos = () => this.lines[1].getPointAtPercentage(this.progress()).position;
                     let fac = 1;
+                    let circleSize = () => (l2_pos().x - l1_pos().x) / (2 * this.numTopCircles() - 1);
+                    if (this.numTopCircles() >= this.numBottomCircles()) {
+                        circleSize = this.circleSize;
+                    }
                     if (this.numTopCircles() != 1) {
                         fac = i / (this.numTopCircles() - 1);
                     }
@@ -125,10 +129,10 @@ export class Cobordism extends Shape {
                                 stroke={this.stroke}
                                 lineWidth={this.lineWidth}
                                 y={() => l1_pos().y}
-                                x={() => fac * (l2_pos().x - this.circleSize() / 2) +
-                                    (1 - fac) * (l1_pos().x + this.circleSize() / 2)}
-                                width={this.circleSize}
-                                height={() => this.circleSize() * 0.5}
+                                x={() => fac * (l2_pos().x - circleSize() / 2) +
+                                    (1 - fac) * (l1_pos().x + circleSize() / 2)}
+                                width={circleSize}
+                                height={() => circleSize() * 0.5 * (0.1 + 0.9 * this.progress())}
                                 opacity={this.progress}
                                 startAngle={180}
                                 lineCap={'round'}
@@ -137,14 +141,14 @@ export class Cobordism extends Shape {
                                 stroke={this.stroke}
                                 lineWidth={this.lineWidth}
                                 y={() => l1_pos().y}
-                                x={() => fac * (l2_pos().x - this.circleSize() / 2) +
-                                    (1 - fac) * (l1_pos().x + this.circleSize() / 2)}
-                                width={this.circleSize}
-                                height={() => this.circleSize() * 0.5}
+                                x={() => fac * (l2_pos().x - circleSize() / 2) +
+                                    (1 - fac) * (l1_pos().x + circleSize() / 2)}
+                                width={circleSize}
+                                height={() => circleSize() * 0.5 * (0.1 + 0.9 * this.progress())}
                                 opacity={this.progress}
                                 endAngle={180}
                                 lineCap={'round'}
-                                lineDash={[Math.PI * this.circleSize() / 30]}
+                                lineDash={() => [Math.PI * circleSize() / 30]}
                             />
                         </Layout >
                     );
