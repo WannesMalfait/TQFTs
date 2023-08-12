@@ -5,6 +5,7 @@ import two_theories from './scenes/two_theories?scene';
 import quantum_theory from './scenes/quantum_theory?scene';
 import time from './scenes/time?scene';
 import functor_on_maps from './scenes/functor_on_maps?scene';
+import functoriality from './scenes/functoriality?scene';
 
 export default makeProject({
   scenes: [
@@ -13,5 +14,6 @@ export default makeProject({
     quantum_theory,
     time,
     functor_on_maps,
+    functoriality,
   ],
 });

@@ -4,6 +4,7 @@ import { SignalValue, SimpleSignal, all, createSignal, easeInOutCubic, makeRef, 
 export interface CobordismProps extends ShapeProps {
     circleSize?: SignalValue<number>;
     lengthScale?: SignalValue<number>;
+    connectorScale?: SignalValue<number>;
     numBottomCircles?: SignalValue<number>;
     numTopCircles?: SignalValue<number>;
     needsAnimation?: SignalValue<boolean>;
@@ -17,6 +18,9 @@ export class Cobordism extends Shape {
     @initial(1)
     @signal()
     public declare readonly lengthScale: SimpleSignal<number, this>;
+    @initial(1)
+    @signal()
+    public declare readonly connectorScale: SimpleSignal<number, this>;
     @initial(1)
     @signal()
     public declare readonly numBottomCircles: SimpleSignal<number, this>;
@@ -48,8 +52,10 @@ export class Cobordism extends Shape {
         // Connecting lines.
         this.add(
             range(2).map(i => {
-                const start_width = (2 * this.numBottomCircles() - 1) * this.circleSize();
-                const end_width = (2 * this.numTopCircles() - 1) * this.circleSize();
+                const start_width = ((this.numBottomCircles() - 1) * this.connectorScale()
+                    + this.numBottomCircles()) * this.circleSize();
+                const end_width = ((this.numTopCircles() - 1) * this.connectorScale()
+                    + this.numTopCircles()) * this.circleSize();
                 return (
                     <CubicBezier
                         ref={makeRef(this.lines, i)}
@@ -122,7 +128,8 @@ export class Cobordism extends Shape {
                     const l1_pos = () => this.lines[0].getPointAtPercentage(this.progress()).position;
                     const l2_pos = () => this.lines[1].getPointAtPercentage(this.progress()).position;
                     let fac = 1;
-                    let circleSize = () => (l2_pos().x - l1_pos().x) / (2 * this.numTopCircles() - 1);
+                    let circleSize = () => (l2_pos().x - l1_pos().x)
+                        / (this.numTopCircles() + (this.numTopCircles() - 1) * this.connectorScale());
                     if (this.numTopCircles() >= this.numBottomCircles()) {
                         circleSize = this.circleSize;
                     }
