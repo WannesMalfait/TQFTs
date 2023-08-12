@@ -5,6 +5,7 @@ export interface ComDiagProps extends ShapeProps {
     labelHeight?: SignalValue<number>;
     gapSize?: SignalValue<number>;
     itemColor?: SignalValue<PossibleColor>;
+    arrowColor?: SignalValue<PossibleColor>;
     labelColor?: SignalValue<PossibleColor>;
     items?: SignalValue<SignalValue<SignalValue<string | null>[]>[]>;
     arrows?: SignalValue<SignalValue<PossibleVector2[]>[]>;
@@ -16,6 +17,9 @@ export class ComDiag extends Shape {
     @initial('#CCCCCC')
     @colorSignal()
     public declare readonly itemColor: ColorSignal<this>;
+    @initial('#CCCCCC')
+    @colorSignal()
+    public declare readonly arrowColor: ColorSignal<this>;
     @initial('white')
     @colorSignal()
     public declare readonly labelColor: ColorSignal<this>;
@@ -49,6 +53,8 @@ export class ComDiag extends Shape {
             ...props
         });
 
+        const row_len = this.items()[0].length;
+
         let diagram =
             <Rect direction={'column'} gap={this.gapSize} alignItems={'center'} layout>
             </Rect>;
@@ -60,7 +66,7 @@ export class ComDiag extends Shape {
                 }
 
                 row_layout.add(<Latex
-                    ref={makeRef(this.itemRefs, row_i * 3 + col_i)}
+                    ref={makeRef(this.itemRefs, row_i * row_len + col_i)}
                     tex={'{\\color{' + this.itemColor() + '}' + item + '}'}
                 />);
             });
@@ -75,12 +81,12 @@ export class ComDiag extends Shape {
             this.arrows().map((_, i) => {
                 return <Ray
                     ref={makeRef(this.arrowRefs, i)}
-                    stroke={this.itemColor}
+                    stroke={this.arrowColor}
                     start={0.1}
                     end={0.1}
-                    lineWidth={2}
+                    lineWidth={1}
                     endArrow={true}
-                    arrowSize={10}
+                    arrowSize={5}
                 />
             })
         )
@@ -91,10 +97,10 @@ export class ComDiag extends Shape {
             const to = new Vector2(unwrap(arrow[1]));
             const from_row = from.x;
             const from_column = from.y;
-            const from_item = this.itemRefs[from_row * 3 + from_column];
+            const from_item = this.itemRefs[from_row * row_len + from_column];
             const to_row = to.x;
             const to_column = to.y;
-            const to_item = this.itemRefs[to_row * 3 + to_column];
+            const to_item = this.itemRefs[to_row * row_len + to_column];
 
             const arrow_ref = this.arrowRefs[i];
 
@@ -116,7 +122,9 @@ export class ComDiag extends Shape {
                 const midpoint = arrow_ref.getPointAtPercentage(0.5);
                 // Push arrows labels away from the center of the diagram.
                 const sign = (midpoint.normal.dot(midpoint.position) >= 0.01) ? 1 : -1;
-                return (midpoint.position.add(midpoint.normal.scale(sign * 25)))
+                return (midpoint.position.add(
+                    // 10 pixels offset from the arrow
+                    midpoint.normal.scale(sign * (10 + this.labelRefs[i].width() / 2))))
                     .transformAsPoint(arrow_ref.parent().localToWorld())
             }
             );
@@ -129,5 +137,21 @@ export class ComDiag extends Shape {
         yield* tween(duration / 3, value => { this.gapSize(easeInOutCubic(value, original_gap_size / 10, original_gap_size)) });
         yield* all(...this.arrowRefs.map(arrow => tween(duration / 3, value => arrow.end(easeInOutCubic(value, 0.1, 0.85)))));
         yield* all(...this.labelRefs.map(label => tween(duration / 3, value => label.opacity(easeInOutCubic(value)))));
+    }
+
+    public *expand(duration: number = 1) {
+        const original_gap_size = this.gapSize();
+        this.gapSize(original_gap_size / 10);
+        yield* this.gapSize(original_gap_size, duration);
+    }
+
+    public *animate_arrows(duration: number = 1) {
+        yield* all(...this.arrowRefs.map(arrow =>
+            tween(duration, value => arrow.end(easeInOutCubic(value, 0.1, 0.85)))));
+    }
+
+    public *animate_labels(duration: number = 1) {
+        yield* all(...this.labelRefs.map(label =>
+            tween(duration, value => label.opacity(easeInOutCubic(value)))));
     }
 }
