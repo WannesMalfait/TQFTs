@@ -21,7 +21,7 @@ export default makeScene2D(function* (view) {
                 lengthScale={0.7}
                 connectorScale={2}
                 needsAnimation={false}
-                hideBottomCircles={true}
+                bottomCirclesOpacity={0}
             />
             <Latex
                 tex={'{\\color{#CCCCCC} m_2}'}

@@ -3,11 +3,13 @@ import { SignalValue, SimpleSignal, all, createSignal, easeInOutCubic, makeRef, 
 
 export interface CobordismProps extends ShapeProps {
     circleSize?: SignalValue<number>;
-    hideBottomCircles?: SignalValue<boolean>;
     lengthScale?: SignalValue<number>;
     connectorScale?: SignalValue<number>;
+    bottomCirclesOpacity?: SignalValue<number>;
+    topCirclesOpacity?: SignalValue<number>;
     numBottomCircles?: SignalValue<number>;
     numTopCircles?: SignalValue<number>;
+    numHoles?: SignalValue<number>;
     needsAnimation?: SignalValue<boolean>;
 }
 
@@ -16,9 +18,12 @@ export class Cobordism extends Shape {
     @initial(200)
     @signal()
     public declare readonly circleSize: SimpleSignal<number, this>;
-    @initial(false)
+    @initial(1)
     @signal()
-    public declare readonly hideBottomCircles: SimpleSignal<boolean, this>;
+    public declare readonly bottomCirclesOpacity: SimpleSignal<number, this>;
+    @initial(1)
+    @signal()
+    public declare readonly topCirclesOpacity: SimpleSignal<number, this>;
     @initial(1)
     @signal()
     public declare readonly lengthScale: SimpleSignal<number, this>;
@@ -31,6 +36,9 @@ export class Cobordism extends Shape {
     @initial(2)
     @signal()
     public declare readonly numTopCircles: SimpleSignal<number, this>;
+    @initial(0)
+    @signal()
+    public declare readonly numHoles: SimpleSignal<number, this>;
     @initial(true)
     @signal()
     public declare readonly needsAnimation: SimpleSignal<boolean, this>;
@@ -98,7 +106,7 @@ export class Cobordism extends Shape {
                             width={this.circleSize}
                             height={() => this.circleSize() * 0.5}
                             lineCap={'round'}
-                            opacity={() => (this.bottomAngle() <= 0.01 || this.hideBottomCircles()) ? 0 : 1}
+                            opacity={() => (this.bottomAngle() <= 0.01) ? 0 : this.bottomCirclesOpacity()}
                             endAngle={this.bottomAngle}
                         />
                     );
@@ -110,13 +118,14 @@ export class Cobordism extends Shape {
         this.add(
             range(this.numBottomCircles() - 1).map(
                 i => {
+                    const width = () => this.bottomCircles[i + 1].left().x - this.bottomCircles[i].right().x;
                     return (
                         <Circle
                             stroke={this.stroke}
                             lineWidth={this.lineWidth}
                             left={this.bottomCircles[i].right}
-                            width={() => this.bottomCircles[i + 1].left().x - this.bottomCircles[i].right().x}
-                            height={() => this.circleSize() * 0.25}
+                            width={width}
+                            height={() => width() * 0.25}
                             lineCap={'round'}
                             startAngle={this.bottomConnectorAngle}
                             endAngle={360}
@@ -124,6 +133,47 @@ export class Cobordism extends Shape {
                         />
                     );
                 }),
+        );
+
+        // Holes.
+        this.add(
+            range(this.numHoles()).map(
+                i => {
+                    const right = this.lines[1].getPointAtPercentage(0.5).position.x;
+                    const left = this.lines[0].getPointAtPercentage(0.5).position.x;
+                    const available_width = right - left;
+                    const width = available_width / (this.numHoles() * 2 + 1);
+                    const x = left + width * (2 * i + 1) + width / 2;
+                    return (
+                        <Layout>
+                            <Circle
+                                stroke={this.stroke}
+                                lineWidth={this.lineWidth}
+                                size={width}
+                                height={width * 0.5}
+                                y={- width * 0.09}
+                                x={x}
+                                startAngle={10}
+                                endAngle={170}
+                                lineCap={'round'}
+                                opacity={() => Math.pow(this.progress(), 4)}
+                            />
+                            <Circle
+                                stroke={this.stroke}
+                                lineWidth={this.lineWidth}
+                                size={width * 0.8}
+                                height={width * 0.5 * 0.8}
+                                y={width * 0.09}
+                                x={x}
+                                startAngle={190}
+                                endAngle={350}
+                                lineCap={'round'}
+                                opacity={() => Math.pow(this.progress(), 4)}
+                            />
+                        </Layout>
+                    );
+                }
+            )
         );
 
         // Top circles.
@@ -152,7 +202,7 @@ export class Cobordism extends Shape {
                                     (1 - fac) * (l1_pos().x + circleSize() / 2)}
                                 width={circleSize}
                                 height={() => circleSize() * 0.5 * (0.1 + 0.9 * this.progress())}
-                                opacity={this.progress}
+                                opacity={() => this.progress() * this.topCirclesOpacity()}
                                 startAngle={180}
                                 lineCap={'round'}
                             />
@@ -164,7 +214,7 @@ export class Cobordism extends Shape {
                                     (1 - fac) * (l1_pos().x + circleSize() / 2)}
                                 width={circleSize}
                                 height={() => circleSize() * 0.5 * (0.1 + 0.9 * this.progress())}
-                                opacity={this.progress}
+                                opacity={() => this.progress() * this.topCirclesOpacity()}
                                 endAngle={180}
                                 lineCap={'round'}
                                 lineDash={() => [Math.PI * circleSize() / 30]}
@@ -178,13 +228,14 @@ export class Cobordism extends Shape {
         this.add(
             range(this.numTopCircles() - 1).map(
                 i => {
+                    const width = () => this.topCircles[i + 1].left().x - this.topCircles[i].right().x;
                     return (
                         <Circle
                             stroke={this.stroke}
                             lineWidth={this.lineWidth}
                             left={this.topCircles[i].right}
-                            width={() => this.topCircles[i + 1].left().x - this.topCircles[i].right().x}
-                            height={() => this.circleSize() * 0.25}
+                            width={width}
+                            height={() => width() * 0.25}
                             lineCap={'round'}
                             opacity={this.progress}
                             endAngle={180}
