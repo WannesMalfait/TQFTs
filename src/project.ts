@@ -11,6 +11,7 @@ import unit_is_what from './scenes/unit_is_what?scene';
 import four_maps from './scenes/four_maps?scene';
 import pants_is_multiply from './scenes/pants_is_multiply?scene';
 import associativity from './scenes/associativity?scene';
+import commutativity from './scenes/commutativity?scene';
 
 export default makeProject({
   scenes: [
@@ -25,5 +26,6 @@ export default makeProject({
     four_maps,
     pants_is_multiply,
     associativity,
+    commutativity,
   ],
 });
