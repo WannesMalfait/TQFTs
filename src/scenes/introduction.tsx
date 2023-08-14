@@ -45,7 +45,7 @@ export default makeScene2D(function* (view) {
         <Cobordism
             ref={cobordism}
             lineWidth={5}
-            stroke={'cyan'}
+            stroke={'lightskyblue'}
             circleSize={200}
             x={() => - circle_offset()}
             scale={0.7}
@@ -57,13 +57,15 @@ export default makeScene2D(function* (view) {
     view.add(
         <ComDiag
             ref={diag}
-            scale={1.5}
+            scale={2}
+            gapSize={100}
             x={circle_offset}
+            itemColor={'pink'}
             items={
                 [
-                    [null, 'A \\otimes A', null],
-                    ['A \\otimes A \\otimes A', 'A', 'A \\otimes A \\otimes A'],
-                    [null, 'A \\otimes A', null]
+                    [null, '\\mathcal H \\otimes \\mathcal H', null],
+                    ['\\mathcal H \\otimes \\mathcal H \\otimes \\mathcal H', '\\mathcal H', '\\mathcal H \\otimes \\mathcal H \\otimes \\mathcal H'],
+                    [null, '\\mathcal H \\otimes \\mathcal H', null]
                 ]}
             arrows={[
                 [[1, 0], [0, 1]],
