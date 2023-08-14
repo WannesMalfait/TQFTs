@@ -183,7 +183,9 @@ export default makeScene2D(function* (view) {
     yield* waitFor(0.5);
 
     const equation = createRef<Latex>();
-    view.add(
+
+    // Need `yield` to get the size calculated.
+    yield view.add(
         <Latex
             ref={equation}
             tex={'{\\color{white} m_2 \\circ (m_2 \\otimes id) = m_3 }'}
@@ -192,11 +194,6 @@ export default makeScene2D(function* (view) {
             opacity={0}
         />
     );
-    // Hack to get the size calculated.
-    yield* equation().y(800, 0.01);
-    yield* equation().opacity(1, 0.01);
-    yield* equation().opacity(0, 0.01);
-    yield* equation().y(300, 0.01);
 
     yield* all(
         top_opacity(0.5, 1),
