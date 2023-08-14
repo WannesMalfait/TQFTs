@@ -1,8 +1,7 @@
 import { Circle, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, easeInBounce, easeInOutCubic, easeInQuad, easeInQuart, waitFor } from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
-  // Create your animations here
 
   const general_relativity = createRef<Txt>();
   const offset = createSignal(0);
@@ -25,7 +24,7 @@ export default makeScene2D(function* (view) {
   />);
 
   yield* all(
-    offset(-70, 0.5).to(70, 1).to(-70, 1).to(0, 1),
+    offset(-70, 0.5, easeInOutCubic).to(70, 1, easeInQuart).to(-70, 1, easeInOutCubic).to(0, 1, easeInOutCubic),
     quantum_mechanics().fill('lightskyblue', 0.5).to('darkorange', 1).to('lightskyblue', 1).to('white', 1),
     general_relativity().fill('lightskyblue', 0.5).to('darkorange', 1).to('lightskyblue', 1).to('white', 1)
   );
