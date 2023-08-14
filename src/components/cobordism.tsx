@@ -5,6 +5,7 @@ export interface CobordismProps extends ShapeProps {
     circleSize?: SignalValue<number>;
     lengthScale?: SignalValue<number>;
     connectorScale?: SignalValue<number>;
+    bottomRowOffset?: SignalValue<number>;
     bottomCirclesOpacity?: SignalValue<number>;
     topCirclesOpacity?: SignalValue<number>;
     numBottomCircles?: SignalValue<number>;
@@ -20,16 +21,19 @@ export class Cobordism extends Shape {
     public declare readonly circleSize: SimpleSignal<number, this>;
     @initial(1)
     @signal()
-    public declare readonly bottomCirclesOpacity: SimpleSignal<number, this>;
-    @initial(1)
-    @signal()
-    public declare readonly topCirclesOpacity: SimpleSignal<number, this>;
-    @initial(1)
-    @signal()
     public declare readonly lengthScale: SimpleSignal<number, this>;
     @initial(1)
     @signal()
     public declare readonly connectorScale: SimpleSignal<number, this>;
+    @initial(0)
+    @signal()
+    public declare readonly bottomRowOffset: SimpleSignal<number, this>;
+    @initial(1)
+    @signal()
+    public declare readonly bottomCirclesOpacity: SimpleSignal<number, this>;
+    @initial(1)
+    @signal()
+    public declare readonly topCirclesOpacity: SimpleSignal<number, this>;
     @initial(1)
     @signal()
     public declare readonly numBottomCircles: SimpleSignal<number, this>;
@@ -73,8 +77,8 @@ export class Cobordism extends Shape {
                         ref={makeRef(this.lines, i)}
                         lineWidth={this.lineWidth}
                         stroke={this.stroke}
-                        p0={[-start_width / 2 + i * start_width, this.circleSize() * this.lengthScale()]}
-                        p1={[-start_width / 2 + i * start_width, 0]}
+                        p0={[-start_width / 2 + i * start_width + this.bottomRowOffset(), this.circleSize() * this.lengthScale()]}
+                        p1={[-start_width / 2 + i * start_width + this.bottomRowOffset(), 0]}
                         p2={[-end_width / 2 + i * end_width, 0]}
                         p3={[-end_width / 2 + i * end_width, -this.circleSize() * this.lengthScale()]}
                         lineCap={'round'}
