@@ -19,7 +19,7 @@ export default makeScene2D(function* (view) {
     yield* tween(8, value => {
         layout_ref().scale(1 + Math.sin(value * Math.PI * 5) * 0.1)
     })
-    yield* all(circle_offset(450, 1),
+    yield* all(circle_offset(500, 1),
         red_scale([1.2, 0.8], 0.5).to([1, 1], 0.5),
         blue_scale([1.2, 0.8], 0.5).to([1, 1], 0.5),
     );
@@ -44,7 +44,7 @@ export default makeScene2D(function* (view) {
     view.add(
         <Cobordism
             ref={cobordism}
-            lineWidth={5}
+            lineWidth={8}
             stroke={'lightskyblue'}
             circleSize={200}
             x={() => - circle_offset()}
@@ -57,8 +57,8 @@ export default makeScene2D(function* (view) {
     view.add(
         <ComDiag
             ref={diag}
-            scale={2}
-            gapSize={100}
+            scale={2.5}
+            gapSize={70}
             x={circle_offset}
             itemColor={'coral'}
             items={
@@ -83,9 +83,13 @@ export default makeScene2D(function* (view) {
                 '\\mu',
                 '\\delta \\otimes id'
             ]}
+            opacity={0}
         />
     );
-    yield* diag().animate();
+    yield* all(
+        diag().animate(),
+        diag().opacity(1, 0.5),
+    );
 
     yield* line_progress(0, 1);
     yield* all(circle_offset(0, 1), diag().opacity(0, 1), cobordism().opacity(0, 1),
