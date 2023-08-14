@@ -7,6 +7,7 @@ export interface ComDiagProps extends ShapeProps {
     itemColor?: SignalValue<PossibleColor>;
     arrowColor?: SignalValue<PossibleColor>;
     labelColor?: SignalValue<PossibleColor>;
+    flipArrows?: SignalValue<boolean>;
     items?: SignalValue<SignalValue<SignalValue<string | null>[]>[]>;
     arrows?: SignalValue<SignalValue<PossibleVector2[]>[]>;
     labels?: SignalValue<string[]>;
@@ -29,6 +30,9 @@ export class ComDiag extends Shape {
     @initial(120)
     @signal()
     public declare readonly gapSize: SimpleSignal<number, this>;
+    @initial(false)
+    @signal()
+    public declare readonly flipArrows: SimpleSignal<boolean, this>;
     @initial([['item']])
     @signal()
     public declare readonly items: SimpleSignal<
@@ -85,7 +89,8 @@ export class ComDiag extends Shape {
                     start={0.1}
                     end={0.1}
                     lineWidth={1}
-                    endArrow={true}
+                    endArrow={!this.flipArrows()}
+                    startArrow={this.flipArrows()}
                     arrowSize={5}
                 />
             })
@@ -135,7 +140,15 @@ export class ComDiag extends Shape {
     public *animate(duration: number = 3) {
         const original_gap_size = this.gapSize();
         yield* tween(duration / 3, value => { this.gapSize(easeInOutCubic(value, original_gap_size / 10, original_gap_size)) });
-        yield* all(...this.arrowRefs.map(arrow => tween(duration / 3, value => arrow.end(easeInOutCubic(value, 0.1, 0.85)))));
+        if (this.flipArrows()) {
+            yield* all(...this.arrowRefs.map(arrow => {
+                arrow.end(0.9);
+                return tween(duration / 3, value => arrow.start(easeInOutCubic(value, 0.9, 0.1)));
+            }
+            ));
+        } else {
+            yield* all(...this.arrowRefs.map(arrow => tween(duration / 3, value => arrow.end(easeInOutCubic(value, 0.1, 0.9)))));
+        }
         yield* all(...this.labelRefs.map(label => tween(duration / 3, value => label.opacity(easeInOutCubic(value)))));
     }
 
@@ -146,8 +159,16 @@ export class ComDiag extends Shape {
     }
 
     public *animate_arrows(duration: number = 1) {
-        yield* all(...this.arrowRefs.map(arrow =>
-            tween(duration, value => arrow.end(easeInOutCubic(value, 0.1, 0.85)))));
+        if (this.flipArrows()) {
+            yield* all(...this.arrowRefs.map(arrow => {
+                arrow.end(0.9);
+                return tween(duration, value => arrow.start(easeInOutCubic(value, 0.9, 0.1)));
+            }));
+
+        } else {
+            yield* all(...this.arrowRefs.map(arrow =>
+                tween(duration, value => arrow.end(easeInOutCubic(value, 0.1, 0.8)))));
+        }
     }
 
     public *animate_labels(duration: number = 1) {

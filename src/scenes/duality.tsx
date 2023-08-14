@@ -102,6 +102,7 @@ export default makeScene2D(function* (view) {
                 gapSize={80}
                 labelHeight={12}
                 itemColor={'coral'}
+                flipArrows={true}
                 items={[
                     [null, '\\mathcal H', null],
                     ['\\mathcal H \\otimes \\mathcal H', null, '\\mathcal H \\otimes \\mathcal H'],
@@ -128,6 +129,7 @@ export default makeScene2D(function* (view) {
                 gapSize={65}
                 labelHeight={12}
                 itemColor={'coral'}
+                flipArrows={true}
                 items={[
                     [null, '\\mathcal H', null],
                     ['\\mathcal H \\otimes \\mathcal H', null, '\\mathcal H \\otimes \\mathcal H'],
