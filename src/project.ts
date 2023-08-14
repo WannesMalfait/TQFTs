@@ -15,6 +15,7 @@ import commutativity from './scenes/commutativity?scene';
 import unitality from './scenes/unitality?scene';
 import duality from './scenes/duality?scene';
 import frobenius_conditions from './scenes/frobenius_conditions?scene';
+import equivalence_of_categories from './scenes/equivalence_of_categories?scene';
 
 export default makeProject({
   scenes: [
@@ -33,5 +34,6 @@ export default makeProject({
     unitality,
     duality,
     frobenius_conditions,
+    equivalence_of_categories,
   ],
 });
