@@ -13,6 +13,7 @@ import pants_is_multiply from './scenes/pants_is_multiply?scene';
 import associativity from './scenes/associativity?scene';
 import commutativity from './scenes/commutativity?scene';
 import unitality from './scenes/unitality?scene';
+import duality from './scenes/duality?scene';
 
 export default makeProject({
   scenes: [
@@ -29,5 +30,6 @@ export default makeProject({
     associativity,
     commutativity,
     unitality,
+    duality,
   ],
 });
