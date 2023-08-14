@@ -92,7 +92,7 @@ export default makeScene2D(function* (view) {
     const txt_opacity = createSignal(0);
     view.add(
         <Latex
-            tex={'{\\color{pink} \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H}}'}
             height={60}
             x={500}
             y={top_height}
@@ -101,7 +101,7 @@ export default makeScene2D(function* (view) {
     )
     view.add(
         <Latex
-            tex={'{\\color{pink} \\mathcal{H} \\otimes \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H} \\otimes \\mathcal{H}}'}
             height={60}
             x={500}
             y={bottom_height}

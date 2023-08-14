@@ -67,7 +67,7 @@ export default makeScene2D(function* (view) {
                 position={[-500, -300]}
                 gapSize={65}
                 scale={4.5}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 labelHeight={12}
                 items={[
                     ['\\mathcal H'],
@@ -95,7 +95,7 @@ export default makeScene2D(function* (view) {
                 position={[500, -300]}
                 gapSize={65}
                 scale={4.5}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 labelHeight={12}
                 items={[
                     ['\\mathcal H \\otimes \\mathcal H'],
@@ -152,7 +152,7 @@ export default makeScene2D(function* (view) {
                 position={[-500, 250]}
                 gapSize={40}
                 scale={4.5}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 labelHeight={12}
                 items={[
                     ['\\mathcal H'],
@@ -198,7 +198,7 @@ export default makeScene2D(function* (view) {
                 position={[500, 260]}
                 gapSize={40}
                 scale={4.5}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 labelHeight={10}
                 items={[
                     ['\\mathbb C'],

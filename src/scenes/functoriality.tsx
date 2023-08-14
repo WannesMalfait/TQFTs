@@ -123,7 +123,7 @@ export default makeScene2D(function* (view) {
                 labelHeight={10}
                 labelColor={'#CCCCCC'}
                 arrowColor={'white'}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 items={[
                     ['\\mathcal{H}'],
                     ['\\mathcal{H} \\otimes \\mathcal{H} \\otimes \\mathcal{H}'],
@@ -144,7 +144,7 @@ export default makeScene2D(function* (view) {
                 labelHeight={10}
                 labelColor={'#CCCCCC'}
                 arrowColor={'white'}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 items={[
                     ['\\mathcal{H}'],
                     ['\\mathcal{H} \\otimes \\mathcal{H}'],

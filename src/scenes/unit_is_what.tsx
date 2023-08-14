@@ -127,7 +127,7 @@ export default makeScene2D(function* (view) {
     view.add(
         <Latex
             ref={unit_tex}
-            tex={'{\\color{pink} ?}'}
+            tex={'{\\color{coral} ?}'}
             height={60}
             x={500}
             y={unit().right().y + 20}
@@ -138,7 +138,7 @@ export default makeScene2D(function* (view) {
 
     yield* waitFor(1);
     unit_tex().opacity(0, 0.4);
-    unit_tex().tex('{\\color{pink} k}');
+    unit_tex().tex('{\\color{coral} k}');
     unit_tex().opacity(1, 0.4);
     yield* waitFor(0.5);
 
@@ -162,7 +162,7 @@ export default makeScene2D(function* (view) {
     const hh_opacity = createSignal(0);
     view.add(
         <Latex
-            tex={'{\\color{pink} \\mathcal{H} \\otimes \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H} \\otimes \\mathcal{H}}'}
             height={60}
             x={500}
             y={two_circles().right().y}
@@ -190,7 +190,7 @@ export default makeScene2D(function* (view) {
     view.add(
         <Latex
             ref={circle_tex}
-            tex={'{\\color{pink} \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H}}'}
             height={60}
             x={500}
             y={single_circle().right().y}
@@ -219,15 +219,15 @@ export default makeScene2D(function* (view) {
         single_circle_line_progress(0.8, 0.5),
     );
     yield* circle_tex().opacity(0, 0.5);
-    circle_tex().tex('{\\color{pink} \\mathcal H = \\mathcal H \\otimes k}');
+    circle_tex().tex('{\\color{coral} \\mathcal H = \\mathcal H \\otimes k}');
     yield* circle_tex().opacity(1, 0.5);
     yield* waitFor(1);
     yield* all(
         circle_tex().opacity(0, 0.35),
         unit_tex().opacity(0, 0.35),
     );
-    circle_tex().tex('{\\color{pink} \\mathcal H = \\mathcal H \\otimes \\mathbb C}');
-    unit_tex().tex('{\\color{pink} \\mathbb C}')
+    circle_tex().tex('{\\color{coral} \\mathcal H = \\mathcal H \\otimes \\mathbb C}');
+    unit_tex().tex('{\\color{coral} \\mathbb C}')
     yield* all(
         circle_tex().opacity(1, 0.35),
         unit_tex().opacity(1, 0.35),

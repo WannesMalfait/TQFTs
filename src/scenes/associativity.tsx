@@ -35,7 +35,7 @@ export default makeScene2D(function* (view) {
                 position={[-600, 200]}
                 scale={3}
                 gapSize={80}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 items={[
                     [null, '\\mathcal H', null],
                     ['\\mathcal H \\otimes \\mathcal H', null, '\\mathcal H \\otimes \\mathcal H'],

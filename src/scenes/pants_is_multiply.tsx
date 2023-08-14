@@ -34,7 +34,7 @@ export default makeScene2D(function* (view) {
                 position={[-500, -300]}
                 gapSize={65}
                 scale={4.5}
-                itemColor={'pink'}
+                itemColor={'coral'}
                 labelHeight={12}
                 items={[
                     ['\\mathcal H'],

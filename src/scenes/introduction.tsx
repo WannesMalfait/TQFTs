@@ -10,7 +10,7 @@ export default makeScene2D(function* (view) {
     const blue_scale = createSignal<PossibleVector2>([1, 1]);
     view.add(
         <Layout ref={layout_ref}>
-            <Circle size={400} x={circle_offset} fill={'orangered'} scale={red_scale}
+            <Circle size={400} x={circle_offset} fill={'coral'} scale={red_scale}
                 opacity={1} compositeOperation={'lighten'} />
             <Circle size={400} x={() => -circle_offset()} fill={'lightskyblue'} scale={blue_scale}
                 opacity={1} compositeOperation={'lighten'} />
@@ -60,7 +60,7 @@ export default makeScene2D(function* (view) {
             scale={2}
             gapSize={100}
             x={circle_offset}
-            itemColor={'pink'}
+            itemColor={'coral'}
             items={
                 [
                     [null, '\\mathcal H \\otimes \\mathcal H', null],
