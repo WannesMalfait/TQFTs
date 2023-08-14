@@ -9,6 +9,7 @@ import functoriality from './scenes/functoriality?scene';
 import base_cobordisms from './scenes/base_cobordisms?scene';
 import unit_is_what from './scenes/unit_is_what?scene';
 import four_maps from './scenes/four_maps?scene';
+import pants_is_multiply from './scenes/pants_is_multiply?scene';
 
 export default makeProject({
   scenes: [
@@ -21,5 +22,6 @@ export default makeProject({
     base_cobordisms,
     unit_is_what,
     four_maps,
+    pants_is_multiply,
   ],
 });
