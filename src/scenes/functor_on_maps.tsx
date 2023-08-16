@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -122,8 +122,8 @@ export default makeScene2D(function* (view) {
             end={hilbert_map}
         />
     )
-    yield* waitFor(1);
+    yield* waitUntil('a transformation');
     yield* hilbert_map(0.85, 1);
-    yield* waitFor(1);
+    yield* waitUntil('Sc. functoriality');
 
 });

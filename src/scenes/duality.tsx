@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -158,6 +158,7 @@ export default makeScene2D(function* (view) {
             />
         </>
     );
+    yield* slideTransition(Direction.Top);
 
     yield* all(
         unitality_diag().opacity(1, 1),
@@ -171,6 +172,7 @@ export default makeScene2D(function* (view) {
         counitality_diag().animate_arrows(0),
         counitality_diag().animate_labels(0),
     );
+    yield* waitUntil('Except');
     yield* all(
         associativity_diag().opacity(0, 1),
         coassociativity_diag().opacity(1, 1),
@@ -179,6 +181,6 @@ export default makeScene2D(function* (view) {
         associativity_txt().text('Coassociativity', 0.3),
         unitality_txt().text('Counitality', 0.3),
     )
-    yield* waitFor(0.5);
+    yield* waitUntil('Sc. Frobenius conditions');
 
 });

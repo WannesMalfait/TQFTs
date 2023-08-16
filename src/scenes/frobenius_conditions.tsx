@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, sequence, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -191,10 +191,11 @@ export default makeScene2D(function* (view) {
             opacity={0}
         />
     );
+    yield* waitFor(1);
     yield* all(
         diag().animate(),
         diag().opacity(1, 1),
     );
-    yield* waitFor(1);
+    yield* waitUntil('equivalence of categories');
 
 });

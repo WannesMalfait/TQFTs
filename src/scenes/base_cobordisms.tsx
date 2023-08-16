@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, all, createRef, createSignal, fadeTransition, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -117,6 +117,8 @@ export default makeScene2D(function* (view) {
             />
         </Rect>
     );
+    yield* slideTransition(Direction.Right, 2);
+    yield* waitFor(1);
     yield* sequence(
         0.8,
         multiplication_txt().opacity(1, 1),
@@ -124,7 +126,7 @@ export default makeScene2D(function* (view) {
         unit_txt().opacity(1, 1),
         counit_txt().opacity(1, 1),
     );
-    yield* waitFor(1);
+    yield* waitUntil('these 4');
     // Move everything to the left of the screen.
     yield* all(
         multiplication().position([-750, -400], 1),
@@ -172,9 +174,10 @@ export default makeScene2D(function* (view) {
             opacity={equals_opacity}
         />
     );
+    yield* waitUntil('for example')
     yield* all(
-        cobordism().x(-200, 1),
-        equals_opacity(1, 1),
+        cobordism().x(-200, 0.5),
+        equals_opacity(1, 0.5),
     );
     const cobordism_1 = createRef<Cobordism>();
     const cobordism_2 = createRef<Cobordism>();
@@ -253,31 +256,31 @@ export default makeScene2D(function* (view) {
         </Layout>
     );
     yield* all(
-        cobordism_1().animate(),
-        cobordism_2().animate(),
+        cobordism_1().animate(0.5, 0.75),
+        cobordism_2().animate(0.5, 0.75),
     );
     yield* all(
-        cobordism_3().extrude(1.5),
-        cobordism_3().bottom_connectors(0.5),
+        cobordism_3().extrude(0.75),
+        cobordism_3().bottom_connectors(0.25),
     );
     yield* all(
-        cobordism_4().extrude(1.5),
-        cobordism_4().bottom_connectors(0.5),
+        cobordism_4().extrude(.75),
+        cobordism_4().bottom_connectors(0.25),
     );
     yield* all(
-        cobordism_5().extrude(1.5),
-        cobordism_5().bottom_connectors(0.5),
+        cobordism_5().extrude(.75),
+        cobordism_5().bottom_connectors(0.25),
     );
     yield* all(
-        cobordism_6().extrude(1.5),
-        cobordism_6().bottom_connectors(0.5),
+        cobordism_6().extrude(.75),
+        cobordism_6().bottom_connectors(0.25),
     );
     yield* all(
-        cobordism_1().topCirclesOpacity(0, 1),
-        cobordism_2().topCirclesOpacity(0, 1),
-        cobordism_3().topCirclesOpacity(0, 1),
-        cobordism_4().topCirclesOpacity(0, 1),
-        cobordism_5().topCirclesOpacity(0, 1),
+        cobordism_1().topCirclesOpacity(0, 0.5),
+        cobordism_2().topCirclesOpacity(0, 0.5),
+        cobordism_3().topCirclesOpacity(0, 0.5),
+        cobordism_4().topCirclesOpacity(0, 0.5),
+        cobordism_5().topCirclesOpacity(0, 0.5),
     );
-    yield* waitFor(1);
+    yield* waitUntil('study');
 });

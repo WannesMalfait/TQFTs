@@ -1,5 +1,10 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "equivalence of categories",
+      "targetTime": 13.808490754809732
+    }
+  ],
   "seed": 3192855804
 }

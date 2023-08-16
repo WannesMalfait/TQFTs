@@ -1,8 +1,9 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, Slides, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
+    yield* slideTransition(Direction.Right);
     const line_progress = createSignal(0);
     view.add(
         <Layout>
@@ -231,31 +232,32 @@ export default makeScene2D(function* (view) {
         counit_diag().opacity(1, 0.5),
     );
     yield* all(
-        multiplication().x(-750, 1),
-        multiplication_diag().x(-250, 1),
-        comultiplication().x(200, 1),
-        comultiplication_diag().x(750, 1),
-        unit().x(-750, 1),
-        unit_diag().x(-250, 1),
-        counit().x(200, 1),
-        counit_diag().x(750, 1),
+        multiplication().x(-750, 0.5),
+        multiplication_diag().x(-250, 0.5),
+        comultiplication().x(200, 0.5),
+        comultiplication_diag().x(750, 0.5),
+        unit().x(-750, 0.5),
+        unit_diag().x(-250, 0.5),
+        counit().x(200, 0.5),
+        counit_diag().x(750, 0.5),
     );
     yield* all(
         multiplication_diag().animate_arrows(1),
-        multiplication_diag().animate_labels(1.5),
+        multiplication_diag().animate_labels(1.2),
         comultiplication_diag().animate_arrows(1),
-        comultiplication_diag().animate_labels(1.5),
+        comultiplication_diag().animate_labels(1.2),
         unit_diag().animate_arrows(1),
-        unit_diag().animate_labels(1.5),
+        unit_diag().animate_labels(1.2),
         counit_diag().animate_arrows(1),
-        counit_diag().animate_labels(1.5),
-    )
+        counit_diag().animate_labels(1.2),
+    );
+    yield* waitUntil('which we call');
     yield* sequence(
-        1.2,
+        0.7,
         multiplication_txt().opacity(1, 1),
         comultiplication_txt().opacity(1, 1),
         unit_txt().opacity(1, 1),
         counit_txt().opacity(1, 1),
     );
-    yield* waitFor(1);
+    yield* waitUntil('Sc. pants is multiply');
 });

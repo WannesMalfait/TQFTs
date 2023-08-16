@@ -1,5 +1,14 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "a transformation",
+      "targetTime": 9.108074613779797
+    },
+    {
+      "name": "Sc. functoriality",
+      "targetTime": 18.040520325425426
+    }
+  ],
   "seed": 28681777
 }

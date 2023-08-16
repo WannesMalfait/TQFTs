@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -92,10 +92,11 @@ export default makeScene2D(function* (view) {
 
         </Layout>
     );
+    yield* slideTransition(Direction.Bottom, 1);
+    yield* waitUntil('the same');
     yield* equals_opacity(1, 1);
-    yield* waitFor(1);
+    yield* waitUntil('let us call');
     yield* labels_opacity(1, 1);
-    yield* waitFor(1);
     const arrow_progress = createSignal(0);
     view.add(
         <Ray
@@ -197,8 +198,9 @@ export default makeScene2D(function* (view) {
 
     yield* all(
         top_opacity(0.5, 1),
-        diagrams().opacity(0.5, 1),
+        // diagrams().opacity(0.5, 1),
     );
+    yield* waitUntil('then we get');
 
 
     const rect = createRef<Rect>();
@@ -217,5 +219,5 @@ export default makeScene2D(function* (view) {
         rect().ripple(),
         equation().opacity(1, 1),
     );
-    yield* waitFor(1);
+    yield* waitUntil('Sc. base cobordisms');
 });

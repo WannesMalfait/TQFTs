@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -57,9 +57,12 @@ export default makeScene2D(function* (view) {
             />
 
         </>
-    )
+    );
+    yield* slideTransition(Direction.Bottom);
+    yield* waitFor(1);
     yield*
         equation().opacity(1, 1);
+    yield* waitUntil('(xy)z = x(yz)');
     yield* all(
         associativity_eq().opacity(1, 1),
         associativity_diag().opacity(1, 1),
@@ -82,6 +85,7 @@ export default makeScene2D(function* (view) {
             lineDash={[20]}
         />
     );
+    yield* waitUntil('For this');
     yield* border().opacity(0.8, 0.5);
     const top_circles_opacity = createSignal(1);
     const label_opacity = createSignal(0);
@@ -235,7 +239,7 @@ export default makeScene2D(function* (view) {
         </Layout>
     )
     yield* overall_opacity(1, 1);
-    yield* waitFor(1);
+    yield* waitFor(3);
     yield* top_circles_opacity(0, 1);
     yield* label_opacity(1, 1);
     const m_3_opacity = createSignal(0);
@@ -272,8 +276,8 @@ export default makeScene2D(function* (view) {
             />
         </>
     );
-    yield* waitFor(1);
+    yield* waitUntil('Since the two');
     yield* m_3_opacity(1, 1);
-    yield* waitFor(1);
+    yield* waitUntil('Sc. commutativity');
 
 });

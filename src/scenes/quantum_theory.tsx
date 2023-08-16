@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, waitFor, waitUntil } from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
 
@@ -43,6 +43,7 @@ export default makeScene2D(function* (view) {
         </Layout>
     );
 
+    yield* waitFor(1);
     yield* top_circle().endAngle(360, 1);
     const line_progress = createSignal(0);
     view.add(
@@ -56,7 +57,7 @@ export default makeScene2D(function* (view) {
             end={line_progress}
         />
     )
-    yield* waitFor(0.5);
+    yield* waitUntil('Incorporate');
     yield* line_progress(1, 1);
     yield* waitFor(0.5);
 
@@ -93,7 +94,7 @@ export default makeScene2D(function* (view) {
     const h_opacity = createSignal(0);
     view.add(
         <Latex
-            tex={'{\\color{white} \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H}}'}
             height={60}
             x={500}
             y={top_circle().right().y}
@@ -101,7 +102,7 @@ export default makeScene2D(function* (view) {
         />
     )
     yield* h_opacity(1, 0.5);
-    yield* waitFor(1);
+    yield* waitUntil('Multiple Circles');
     yield* bottom_circles_angle(360, 1);
 
     const bottom_line_progress = createSignal(0);
@@ -116,12 +117,13 @@ export default makeScene2D(function* (view) {
             end={bottom_line_progress}
         />
     )
+    yield* waitFor(2);
     yield* bottom_line_progress(1, 1);
-    yield* waitFor(0.5);
+    yield* waitUntil('mathematical way');
     const hh_opacity = createSignal(0);
     view.add(
         <Latex
-            tex={'{\\color{white} \\mathcal{H} \\otimes \\mathcal{H}}'}
+            tex={'{\\color{coral} \\mathcal{H} \\otimes \\mathcal{H}}'}
             height={60}
             x={500}
             y={bottom_circles().right().y}
@@ -129,6 +131,6 @@ export default makeScene2D(function* (view) {
         />
     )
     yield* hh_opacity(1, 0.5);
-    yield* waitFor(0.5);
+    yield* waitUntil('Sc. time');
 
 });

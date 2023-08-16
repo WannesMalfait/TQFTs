@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { BBox, all, createRef, createSignal, sequence, waitFor, waitUntil, zoomInTransition } from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
 
@@ -76,6 +76,8 @@ export default makeScene2D(function* (view) {
         </Layout>
     );
 
+    yield* zoomInTransition(new BBox(-view.width() / 2, 0, 400, 800), 1);
+
     const line_progress = createSignal(0);
     view.add(
         <Ray
@@ -88,7 +90,8 @@ export default makeScene2D(function* (view) {
             end={line_progress}
         />
     )
-    yield* waitFor(0.5);
+
+    yield* waitFor(2);
     yield* line_progress(1, 1);
     yield* waitFor(0.5);
 
@@ -107,7 +110,7 @@ export default makeScene2D(function* (view) {
     )
 
     yield* quantum_theory().opacity(1, 0.5);
-    yield* waitFor(1);
+    yield* waitUntil('to what');
 
     const unit_line_progress = createSignal(0);
     view.add(
@@ -136,11 +139,11 @@ export default makeScene2D(function* (view) {
     )
     yield* unit_tex().opacity(1, 0.5);
 
-    yield* waitFor(1);
+    yield* waitUntil('call it k');
     unit_tex().opacity(0, 0.4);
     unit_tex().tex('{\\color{coral} k}');
     unit_tex().opacity(1, 0.4);
-    yield* waitFor(0.5);
+    yield* waitFor(1.5);
 
 
     yield* two_circles_angle(360, 1);
@@ -170,7 +173,7 @@ export default makeScene2D(function* (view) {
         />
     )
     yield* hh_opacity(1, 0.5);
-    yield* waitFor(1);
+    yield* waitFor(1.5);
     yield* single_circle().endAngle(360, 1);
     const single_circle_line_progress = createSignal(0);
     view.add(
@@ -218,10 +221,11 @@ export default makeScene2D(function* (view) {
         empty_space().opacity(0.5, 1),
         single_circle_line_progress(0.8, 0.5),
     );
+    yield* waitUntil('so the tensor');
     yield* circle_tex().opacity(0, 0.5);
     circle_tex().tex('{\\color{coral} \\mathcal H = \\mathcal H \\otimes k}');
     yield* circle_tex().opacity(1, 0.5);
-    yield* waitFor(1);
+    yield* waitUntil('C');
     yield* all(
         circle_tex().opacity(0, 0.35),
         unit_tex().opacity(0, 0.35),
@@ -232,7 +236,7 @@ export default makeScene2D(function* (view) {
         circle_tex().opacity(1, 0.35),
         unit_tex().opacity(1, 0.35),
     );
-    yield* waitFor(1);
+    yield* waitUntil('Sc. four maps');
 
 
 });

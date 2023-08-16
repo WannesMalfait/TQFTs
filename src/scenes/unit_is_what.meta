@@ -1,5 +1,26 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "to what",
+      "targetTime": 7.205731916241046
+    },
+    {
+      "name": "call it k",
+      "targetTime": 11.556926103922695
+    },
+    {
+      "name": "so the tensor",
+      "targetTime": 23.829337076079824
+    },
+    {
+      "name": "C",
+      "targetTime": 41.908318574371705
+    },
+    {
+      "name": "Sc. four maps",
+      "targetTime": 45.167943159517186
+    }
+  ],
   "seed": 1562491963
 }

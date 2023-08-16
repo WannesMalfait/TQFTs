@@ -1,5 +1,5 @@
 import { Circle, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, easeInBounce, easeInOutCubic, easeInQuad, easeInQuart, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, easeInBounce, easeInOutCubic, easeInQuad, easeInQuart, loopUntil, waitFor, waitUntil } from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
 
@@ -24,11 +24,24 @@ export default makeScene2D(function* (view) {
   />);
 
   yield* all(
-    offset(-70, 0.5, easeInOutCubic).to(70, 1, easeInQuart).to(-70, 1, easeInOutCubic).to(0, 1, easeInOutCubic),
-    quantum_mechanics().fill('lightskyblue', 0.5).to('darkorange', 1).to('lightskyblue', 1).to('white', 1),
-    general_relativity().fill('lightskyblue', 0.5).to('darkorange', 1).to('lightskyblue', 1).to('white', 1)
+    offset(-70, 0.5, easeInOutCubic),
+    quantum_mechanics().fill('lightskyblue', 0.5),
+    general_relativity().fill('lightskyblue', 0.5),
+  );
+  yield* loopUntil(
+    'Unify',
+    () => all(
+      offset(70, 1, easeInQuart).to(-70, 1, easeInOutCubic),
+      quantum_mechanics().fill('darkorange', 1).to('lightskyblue', 1),
+      general_relativity().fill('darkorange', 1).to('lightskyblue', 1),
+    )
   );
   yield* waitFor(1);
+  yield* all(
+    offset(0, 1, easeInOutCubic),
+    quantum_mechanics().fill('white', 1),
+    general_relativity().fill('white', 1),
+  );
 
   const quantum_gravity = createRef<Txt>();
   view.add(<Txt
@@ -57,9 +70,10 @@ export default makeScene2D(function* (view) {
     from={general_relativity().bottom}
     to={quantum_gravity().top}
   />);
+  yield* waitUntil('Quantum Gravity');
   yield* arrow_progress(0.8, 1);
   yield* quantum_gravity().opacity(1, 1);
-  yield* waitFor(1);
+  yield* waitUntil('TQFTs');
 
   const cover = createRef<Rect>();
   view.add(<Rect
@@ -77,6 +91,6 @@ export default makeScene2D(function* (view) {
     fill={'lightskyblue'}
     opacity={0}
   />);
-  yield* all(tqfts().opacity(1, 1), tqfts().fontSize(100, 2));
-  yield* waitFor(1);
+  yield* all(tqfts().opacity(1, 1), tqfts().scale(1.3, 2));
+  yield* waitUntil('Space');
 });

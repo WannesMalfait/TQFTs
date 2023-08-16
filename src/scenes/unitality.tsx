@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Direction, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -130,10 +130,14 @@ export default makeScene2D(function* (view) {
     )
     yield* unit_diag().animate_arrows(0);
     yield* unit_diag().animate_labels(0);
+    yield* slideTransition(Direction.Left);
     yield* equation().opacity(1, 1);
-    yield* waitFor(1);
+
+
+    yield* waitUntil('the unit');
     yield* unit_opacity(1, 1);
     yield* unit_bottom_label_opacity(1, 1);
+    yield* waitUntil('1_H');
     yield* unit_top_label_opacity(1, 1);
     yield* all(
         unitality_eq().opacity(1, 1),
@@ -142,7 +146,6 @@ export default makeScene2D(function* (view) {
         equation().opacity(0.5, 0.5),
     );
     yield* unit_opacity(0, 0.5);
-    yield* waitFor(0.5);
     const border = createRef<Rect>();
     view.add(
         <Rect
@@ -345,6 +348,6 @@ export default makeScene2D(function* (view) {
     yield* top_circles_opacity(0, 1);
     yield* waitFor(1);
     yield* label_opacity(1, 1);
-    yield* waitFor(1);
+    yield* waitUntil('Sc. duality');
 
 });

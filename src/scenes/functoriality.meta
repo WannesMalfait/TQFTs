@@ -1,5 +1,22 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "the same",
+      "targetTime": 4.80322739599448
+    },
+    {
+      "name": "let us call",
+      "targetTime": 12.886486884830756
+    },
+    {
+      "name": "then we get",
+      "targetTime": 19.389137496793552
+    },
+    {
+      "name": "Sc. base cobordisms",
+      "targetTime": 28.465314548228488
+    }
+  ],
   "seed": 3835465774
 }

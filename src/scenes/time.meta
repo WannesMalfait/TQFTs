@@ -1,5 +1,26 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "time",
+      "targetTime": 6.601388180665972
+    },
+    {
+      "name": "cobordisms",
+      "targetTime": 21.98009478047045
+    },
+    {
+      "name": "stretch",
+      "targetTime": 28.4434990446955
+    },
+    {
+      "name": "mathematicians have",
+      "targetTime": 47.87501073807744
+    },
+    {
+      "name": "Sc. Functor on maps",
+      "targetTime": 53.05911918560537
+    }
+  ],
   "seed": 915710397
 }

@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { BBox, all, createRef, createSignal, sequence, slideTransition, waitFor, waitUntil, zoomInTransition } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -58,6 +58,8 @@ export default makeScene2D(function* (view) {
         multiplication_diag().animate_labels(0),
     );
     base_things().opacity(0.5);
+
+    yield* zoomInTransition(new BBox(-500, -300, 700, 400));
     const equation = createRef<Latex>();
     view.add(
         <Latex
@@ -67,7 +69,8 @@ export default makeScene2D(function* (view) {
             y={-400}
             opacity={0}
         />
-    )
+    );
+    yield* waitUntil('we all know');
     yield*
         equation().opacity(1, 1);
 
@@ -118,12 +121,13 @@ export default makeScene2D(function* (view) {
             />
         </>
     );
-    yield* waitFor(1);
+    yield* waitUntil('first step');
     yield* all(
         x_label().opacity(1, 1),
         y_label().opacity(1, 1),
-    ),
-        yield* xy_label().opacity(1, 1);
+    );
     yield* waitFor(1);
+    yield* xy_label().opacity(1, 1);
+    yield* waitUntil('Sc. associativity');
 
 });

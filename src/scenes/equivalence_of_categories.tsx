@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { Color, all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { Color, all, createRef, createSignal, fadeTransition, sequence, slideTransition, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -32,8 +32,9 @@ export default makeScene2D(function* (view) {
             />
         </>
     )
+    yield* fadeTransition(1);
     yield* equation().opacity(1, 1);
-    yield* waitFor(2);
+    yield* waitFor(4);
     yield* all(
         equation().opacity(0, 1.5),
         tqfts().opacity(1, 1),
@@ -57,7 +58,8 @@ export default makeScene2D(function* (view) {
             startArrow
             opacity={0}
         />
-    )
+    );
+    yield* waitUntil('the same');
     yield* all(
         arrow().opacity(1, 1),
         arrow().end(0.9, 1),
@@ -68,6 +70,6 @@ export default makeScene2D(function* (view) {
         tqfts().fill(color, 1),
         frobenius().fill(color, 1),
     );
-    yield* waitFor(1);
+    yield* waitUntil('End');
 
 });

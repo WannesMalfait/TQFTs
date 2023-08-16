@@ -1,5 +1,14 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "Except",
+      "targetTime": 5.318617114718983
+    },
+    {
+      "name": "Sc. Frobenius conditions",
+      "targetTime": 11.452268575014942
+    }
+  ],
   "seed": 3068362249
 }

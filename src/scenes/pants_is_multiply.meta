@@ -1,5 +1,18 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "we all know",
+      "targetTime": 2.092604699420803
+    },
+    {
+      "name": "first step",
+      "targetTime": 7.6405864590381345
+    },
+    {
+      "name": "Sc. associativity",
+      "targetTime": 16.068149804768304
+    }
+  ],
   "seed": 593494651
 }

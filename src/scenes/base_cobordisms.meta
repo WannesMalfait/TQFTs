@@ -1,5 +1,18 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "these 4",
+      "targetTime": 8.712467629214183
+    },
+    {
+      "name": "for example",
+      "targetTime": 15.609876966005308
+    },
+    {
+      "name": "study",
+      "targetTime": 24.41751947248867
+    }
+  ],
   "seed": 2625481668
 }

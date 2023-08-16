@@ -1,5 +1,22 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "(xy)z = x(yz)",
+      "targetTime": 6.3881707664488205
+    },
+    {
+      "name": "For this",
+      "targetTime": 11.70131458868562
+    },
+    {
+      "name": "Since the two",
+      "targetTime": 28.79056826491528
+    },
+    {
+      "name": "Sc. commutativity",
+      "targetTime": 34.38254368993222
+    }
+  ],
   "seed": 3644813274
 }

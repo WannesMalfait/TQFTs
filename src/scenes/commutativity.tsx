@@ -1,5 +1,5 @@
 import { Circle, Latex, Layout, Ray, Rect, Shape, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { all, createRef, createSignal, fadeTransition, sequence, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from '../components';
 
 export default makeScene2D(function* (view) {
@@ -21,11 +21,13 @@ export default makeScene2D(function* (view) {
                 opacity={0}
             />
         </>
-    )
+    );
+    yield* fadeTransition();
+    yield* waitFor(1);
     yield*
         equation().opacity(1, 1);
 
-    yield* waitFor(1);
+    yield* waitUntil('Indeed');
     const border = createRef<Rect>();
     view.add(
         <Rect
@@ -152,6 +154,6 @@ export default makeScene2D(function* (view) {
     yield* overall_opacity(1, 1);
     yield* waitFor(0.5);
     yield* label_opacity(1, 1);
-    yield* waitFor(1);
+    yield* waitUntil('Sc. Unitality');
 
 });

@@ -1,5 +1,5 @@
 import { Circle, CubicBezier, Latex, Layout, Ray, Rect, Txt, colorSignal, makeScene2D } from '@motion-canvas/2d';
-import { PossibleVector2, all, createRef, createSignal, sequence, waitFor } from '@motion-canvas/core';
+import { PossibleVector2, all, createRef, createSignal, loopUntil, sequence, waitFor, waitUntil } from '@motion-canvas/core';
 import { Cobordism, ComDiag } from "../components";
 
 export default makeScene2D(function* (view) {
@@ -33,7 +33,7 @@ export default makeScene2D(function* (view) {
     )
     yield* pants().bottom_circles();
     yield* space_txt('Space', 1);
-    yield* waitFor(1);
+    yield* waitUntil('time');
     const time_txt = createSignal('');
     first_part.add(
         <Txt
@@ -78,9 +78,9 @@ export default makeScene2D(function* (view) {
             y={-450}
         />
     )
-    yield* waitFor(0.5);
+    yield* waitUntil('cobordisms');
     yield* cobordism_txt('Cobordisms', 1);
-    yield* waitFor(1);
+    yield* waitUntil('stretch');
 
 
     const opacity = createSignal(0);
@@ -173,15 +173,18 @@ export default makeScene2D(function* (view) {
     );
 
     // Stretch the shape a little bit.
-    yield* all(
-        rotation(10, 3).to(-2, 1).to(0, 1),
-        scale([0.8, 1.1], 1).to([1.05, 0.9], 3),
-        waist_thickness(450, 4).to(300, 1),
-        beziers(-200, 2).to(-450, 3),
-        circle_offset(120, 1.4).to(250, 2.8),
-        middle_gap(-150, 2.7).to(-80, 1.5)
+    yield* loopUntil(
+        'mathematicians have',
+        () => all(
+            rotation(10, 3).to(-2, 1).to(0, 1),
+            scale([0.8, 1.1], 1).to([1.05, 0.9], 3),
+            waist_thickness(450, 4).to(300, 1),
+            beziers(-200, 2).to(-450, 3),
+            circle_offset(120, 1.4).to(250, 2.8),
+            middle_gap(-150, 2.7).to(-80, 1.5),
+        )
     );
-    yield* waitFor(0.5);
+    yield* waitFor(1);
 
     // Transform into pair of pants.
     yield* sequence(
@@ -192,7 +195,7 @@ export default makeScene2D(function* (view) {
         middle_gap(-400, 1),
         scale([1, 1], 0.8),
     );
-    yield* waitFor(1);
+    yield* waitUntil('Sc. Functor on maps');
 
 
 

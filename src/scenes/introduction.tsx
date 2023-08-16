@@ -1,6 +1,6 @@
 import { Circle, Layout, Line, Ray, Rect, Txt, makeScene2D } from "@motion-canvas/2d";
 import { Cobordism, ComDiag } from "../components";
-import { PossibleVector2, all, createRef, createSignal, delay, easeOutQuint, tween, waitFor } from "@motion-canvas/core";
+import { PossibleVector2, all, createRef, createSignal, delay, easeOutQuint, tween, useDuration, waitFor, waitUntil } from "@motion-canvas/core";
 
 export default makeScene2D(function* (view) {
 
@@ -16,8 +16,8 @@ export default makeScene2D(function* (view) {
                 opacity={1} compositeOperation={'lighten'} />
         </Layout>
     )
-    yield* tween(8, value => {
-        layout_ref().scale(1 + Math.sin(value * Math.PI * 5) * 0.1)
+    yield* tween(3, value => {
+        layout_ref().scale(1 + Math.sin(value * Math.PI) * 0.1)
     })
     yield* all(circle_offset(500, 1),
         red_scale([1.2, 0.8], 0.5).to([1, 1], 0.5),
@@ -90,12 +90,13 @@ export default makeScene2D(function* (view) {
         diag().animate(),
         diag().opacity(1, 0.5),
     );
-
+    yield* waitUntil('merge back');
     yield* line_progress(0, 1);
     yield* all(circle_offset(0, 1), diag().opacity(0, 1), cobordism().opacity(0, 1),
         delay(0.5, all(red_scale([1, 1], 0.5), blue_scale([1, 1], 0.5))));
-    yield* tween(2, value => {
-        layout_ref().scale(1 + Math.sin(value * Math.PI * 1.5) * 0.1)
+    const dur = useDuration('show title');
+    yield* tween(dur, value => {
+        layout_ref().scale(1 + Math.sin(value * Math.PI * dur * 0.75) * 0.1)
     })
     yield* layout_ref().scale(0, 1);
     const title = createRef<Txt>();
@@ -110,5 +111,5 @@ export default makeScene2D(function* (view) {
         scale={0.5}
     />);
     yield* all(title().fontSize(250, 2, easeOutQuint), title().opacity(1, 1));
-    yield* waitFor(1);
+    yield* waitUntil('Revolutions');
 })
