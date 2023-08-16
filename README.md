@@ -9,3 +9,8 @@ NOTE: The blender files make use of hdri's for the environment lighting.
 These are not packaged with the blend file itself to save space.
 They come pre-installed with blender, but can also be found on
 hdri-haven.
+
+NOTE: since I experienced some problems with video and audio syncing
+in playback with motion-canvas, I made some final adjustments in blender's VSE.
+Because of this, the motion-canvas preview might not line up exactly with the
+audio.
