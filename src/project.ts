@@ -1,7 +1,9 @@
 import { makeProject } from '@motion-canvas/core';
 
 import introduction from './scenes/introduction?scene';
+import revolutions_in_physics from './scenes/revolutions_in_physics?scene';
 import two_theories from './scenes/two_theories?scene';
+import shape_of_space from './scenes/shape_of_space?scene';
 import quantum_theory from './scenes/quantum_theory?scene';
 import time from './scenes/time?scene';
 import functor_on_maps from './scenes/functor_on_maps?scene';
@@ -20,7 +22,9 @@ import equivalence_of_categories from './scenes/equivalence_of_categories?scene'
 export default makeProject({
   scenes: [
     introduction,
+    revolutions_in_physics,
     two_theories,
+    shape_of_space,
     quantum_theory,
     time,
     functor_on_maps,
