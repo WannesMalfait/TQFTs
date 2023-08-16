@@ -1,5 +1,7 @@
 import { makeProject } from '@motion-canvas/core';
 
+import audio from './audio/script.mp3';
+
 import introduction from './scenes/introduction?scene';
 import revolutions_in_physics from './scenes/revolutions_in_physics?scene';
 import two_theories from './scenes/two_theories?scene';
@@ -40,4 +42,5 @@ export default makeProject({
     frobenius_conditions,
     equivalence_of_categories,
   ],
+  audio: audio
 });
